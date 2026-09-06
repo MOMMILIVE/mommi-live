@@ -206,14 +206,74 @@ async function runAllTests() {
       const hasDumont = texts.some(t => t.toLowerCase() === 'dumont' || t.includes('Dumont Paris') || t.includes('dumont.com'));
       const hasMomentLive = texts.some(t => t.includes('Moment Live'));
       const hasEmail = texts.some(t => t.includes('access@mommilive.com'));
-      return { hasDumont, hasMomentLive, hasEmail };
+      const hasForbiddenLinks = Array.from(document.querySelectorAll('a'))
+        .map(a => a.getAttribute('href') || '')
+        .some(h => h.includes('satto.studio') || h.includes('behance.net') || h.includes('are.na') || (h.includes('instagram.com') && !h.includes('mommilive')));
+      return { hasDumont, hasMomentLive, hasEmail, hasForbiddenLinks };
     });
     if (checkCopy.hasDumont) throw new Error(`Legacy Dumont copy found on ${p.url}`);
     if (checkCopy.hasMomentLive) throw new Error(`Typo "Moment Live" found on ${p.url}`);
+    if (checkCopy.hasForbiddenLinks) throw new Error(`Forbidden template links found on ${p.url}`);
   }
-  console.log('✓ All pages pass brand QC (Mommi Live, access@mommilive.com, exact titles, no Dumont/Moment Live)');
+  console.log('✓ All pages pass brand QC (Mommi Live, access@mommilive.com, exact titles, no Dumont/Moment Live, zero forbidden links)');
 
-  console.log('\n--- TEST 8: Console Errors Check ---');
+  console.log('\n--- TEST 8: Authentic Social Media & Profile Links ---');
+  await page.goto('http://localhost:3000/about', { waitUntil: 'load' });
+  await page.waitForTimeout(1000);
+
+  const socialLinks = await page.evaluate(() => {
+    const containers = Array.from(document.querySelectorAll('.framer-wb69ci'));
+    if (containers.length === 0) return { count: 0, links: [], forbiddenHrefs: [] };
+    const firstContainerLinks = Array.from(containers[0].querySelectorAll('a')).map(a => ({
+      text: a.innerText.trim(),
+      href: a.getAttribute('href'),
+      target: a.getAttribute('target'),
+      rel: a.getAttribute('rel'),
+      pointerEvents: window.getComputedStyle(a).pointerEvents
+    }));
+
+    const allLinksOnPage = Array.from(document.querySelectorAll('a')).map(a => a.getAttribute('href') || '');
+    const forbiddenExternalHrefs = allLinksOnPage.filter(h =>
+      h.includes('satto.studio') || h.includes('behance.net') || h.includes('are.na') || (h.includes('instagram.com') && !h.includes('mommilive'))
+    );
+
+    return {
+      containerCount: containers.length,
+      links: firstContainerLinks,
+      forbiddenHrefs: forbiddenExternalHrefs
+    };
+  });
+
+  console.log('Social containers found on /about:', socialLinks.containerCount);
+  console.log('Social links:', socialLinks.links);
+
+  const expectedProfiles = [
+    { name: 'Instagram', url: 'https://www.instagram.com/mommilive/' },
+    { name: 'EverybodyWiki', url: 'https://en.everybodywiki.com/Mommi_Live' },
+    { name: 'Crunchbase', url: 'https://www.crunchbase.com/person/mommi-live-e7dc' },
+    { name: 'IMDb', url: 'https://www.imdb.com/name/nm18188551/' }
+  ];
+
+  for (const exp of expectedProfiles) {
+    const found = socialLinks.links.find(l => l.href === exp.url && l.text.includes(exp.name));
+    if (!found) {
+      throw new Error(`Missing authentic profile link for ${exp.name} (${exp.url}) in .framer-wb69ci`);
+    }
+    if (found.target !== '_blank') {
+      throw new Error(`Social link for ${exp.name} does not have target="_blank"`);
+    }
+    if (found.pointerEvents === 'none') {
+      throw new Error(`Social link for ${exp.name} has pointer-events: none`);
+    }
+    console.log(`  ✓ ${exp.name} link verified: ${exp.url}`);
+  }
+
+  if (socialLinks.forbiddenHrefs.length > 0) {
+    throw new Error(`Template links still found on /about: ${socialLinks.forbiddenHrefs.join(', ')}`);
+  }
+  console.log('✓ Zero forbidden template external links found (satto.studio, behance.net, are.na eliminated)');
+
+  console.log('\n--- TEST 9: Console Errors Check ---');
   console.log('Total console errors caught:', consoleErrors.length);
   if (consoleErrors.length > 0) {
     console.log('Errors:', consoleErrors);

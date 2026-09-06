@@ -118,7 +118,13 @@ async function testCampaignAura() {
     const url = `http://localhost:3000/photographs/${prof.slug}`;
     console.log(`Checking ${url} (${prof.expectedTitle})...`);
     await page.goto(url, { waitUntil: 'load' });
-    await page.waitForTimeout(600);
+    try {
+      await page.waitForFunction(
+        intro => document.body && document.body.innerText.includes(intro),
+        prof.introSnippet,
+        { timeout: 8000 }
+      );
+    } catch (e) {}
 
     const pageText = await page.evaluate(() => document.body.innerText);
 
@@ -212,7 +218,13 @@ async function testCampaignAura() {
     const url = `http://localhost:3000/photos/${proj.slug}`;
     console.log(`Checking ${url} (${proj.expectedTitle})...`);
     await page.goto(url, { waitUntil: 'load' });
-    await page.waitForTimeout(600);
+    try {
+      await page.waitForFunction(
+        client => document.body && document.body.innerText.includes(client),
+        proj.client,
+        { timeout: 8000 }
+      );
+    } catch (e) {}
 
     const pageText = await page.evaluate(() => document.body.innerText);
 
@@ -250,7 +262,13 @@ async function testCampaignAura() {
     const url = `http://localhost:3000/photos/${proj.slug}/list`;
     console.log(`Checking ${url} (${proj.expectedTitle} List View)...`);
     await page.goto(url, { waitUntil: 'load' });
-    await page.waitForTimeout(600);
+    try {
+      await page.waitForFunction(
+        client => document.body && document.body.innerText.includes(client),
+        proj.client,
+        { timeout: 8000 }
+      );
+    } catch (e) {}
 
     const pageText = await page.evaluate(() => document.body.innerText);
 
