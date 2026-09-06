@@ -314,7 +314,7 @@ a[href*="dumontdark"],
       'a[data-framer-name="Mobile Primary"]'
     );
     logoLinks.forEach(a => {
-      const isNav = /\b(About|Photographs|Journal|Archive|Photos|Home)\b/i.test(a.textContent);
+      const isNav = /\b(About|Photographs|Campaigns|Journal|Archive|Photos|Directives|Home)\b/i.test(a.textContent);
       const isLogo = a.closest('[data-framer-name="Logo Mobile"]') || 
                      a.closest('[data-framer-name="Logo"]') || 
                      a.closest(".framer-mw51r4") || 
@@ -685,6 +685,26 @@ html.lenis body {
         if (a.style.color !== 'rgb(0, 0, 0)') a.style.color = 'rgb(0, 0, 0)';
       }
     });
+
+    // Update Menu Navigation Links: Photos -> Directives, Photographs -> Campaigns
+    document.querySelectorAll('a[data-framer-name="Desktop Primary"], a[data-framer-name="Mobile Primary"]').forEach(a => {
+      a.querySelectorAll('p, span').forEach(p => {
+        if (p.textContent === 'Photographs') {
+          p.textContent = 'Campaigns';
+        } else if (p.textContent === 'Photos') {
+          p.textContent = 'Directives';
+        }
+      });
+    });
+
+    // Update Photographs Page Heading to Campaigns
+    if (window.location.pathname.includes('/photographs')) {
+      document.querySelectorAll('[data-framer-name="Title"] h1, [data-framer-name="Title"] p').forEach(el => {
+        if (el.textContent.trim() === 'Photographs') {
+          el.textContent = 'Campaigns';
+        }
+      });
+    }
 
     // 1. Exact term replacements across all text nodes
     const exactReplacements = {

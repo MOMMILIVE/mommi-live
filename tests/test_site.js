@@ -154,7 +154,8 @@ async function runAllTests() {
   console.log('\n--- TEST 6: Navigation via Menu ---');
   const navTargets = [
     { label: 'About', path: '/about' },
-    { label: 'Photographs', path: '/photographs' },
+    { label: 'Campaigns', path: '/photographs' },
+    { label: 'Directives', path: '/photos' },
     { label: 'Journal', path: '/journal' },
     { label: 'Archive', path: '/archive' },
     { label: 'Home', path: '/' }
