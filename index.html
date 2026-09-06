@@ -10,8 +10,11 @@
     <meta name="description" content="Mommi Live is a European creative syndicate and visual intelligence practice operating across high-fashion art direction, campaign imagery, and digital architecture.">
     <meta name="framer-search-index" content="https://framerusercontent.com/sites/3tPtm0LDC1llLKviCs1cnb/searchIndex-MMUhFVGsYatR.json">
     <meta name="framer-search-index-fallback" content="https://framerusercontent.com/sites/3tPtm0LDC1llLKviCs1cnb/searchIndex-PcqBHDikFaEm.json">
-    <link href="https://framerusercontent.com/images/9eDuQvzhe6ygvj0cLorG8HvuEnU.jpg" rel="icon" media="(prefers-color-scheme: light)">
-    <link href="https://framerusercontent.com/images/8Wdh4dGNhoa84aYYpiMVrPktI2c.jpg" rel="icon" media="(prefers-color-scheme: dark)">
+    <link href="/assets/favicon-light-32x32.png" rel="icon" type="image/png" sizes="32x32" media="(prefers-color-scheme: light)">
+    <link href="/assets/favicon-dark-32x32.png" rel="icon" type="image/png" sizes="32x32" media="(prefers-color-scheme: dark)">
+    <link href="/assets/favicon-32x32.png" rel="icon" type="image/png" sizes="32x32">
+    <link href="/assets/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180">
+    <link href="/favicon.ico" rel="shortcut icon">
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Mommi Live — Creative Syndicate · Europe">
@@ -204,6 +207,16 @@ a[href*="dumontdark"],
     let ogTitle = document.querySelector('meta[property="og:title"]');
     if (ogTitle && ogTitle.getAttribute('content') !== title) {
       ogTitle.setAttribute('content', title);
+    }
+
+    // Favicons
+    let iconLight = document.querySelector('link[rel="icon"][media*="light"]');
+    if (iconLight && iconLight.getAttribute('href') !== '/assets/favicon-light-32x32.png') {
+      iconLight.setAttribute('href', '/assets/favicon-light-32x32.png');
+    }
+    let iconDark = document.querySelector('link[rel="icon"][media*="dark"]');
+    if (iconDark && iconDark.getAttribute('href') !== '/assets/favicon-dark-32x32.png') {
+      iconDark.setAttribute('href', '/assets/favicon-dark-32x32.png');
     }
   }
 
