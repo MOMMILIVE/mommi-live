@@ -1,0 +1,13 @@
+{
+  "name": "mommi-live",
+  "version": "1.0.0",
+  "description": "MOMMI LIVE — European Creative Syndicate & Visual Intelligence Practice",
+  "private": true,
+  "scripts": {
+    "start": "python3 serve.py",
+    "test": "node tests/test_site.js && node tests/test_campaign_aura.js"
+  },
+  "devDependencies": {
+    "playwright": "^1.50.0"
+  }
+}
