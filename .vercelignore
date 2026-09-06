@@ -1,0 +1,39 @@
+# Sensitive tax, bank, personal files
+*.csv
+*.pdf
+*.txt
+*.py
+!serve.py
+2024/
+2025/
+FINAL_OUTPUT/
+FUNDING_PROJECT/
+JANSONS_VEDLEGG_TEMP/
+LAST STEP to freedom/
+Lånekassen, SUBMISSION/
+Personal debt/
+SKATTEETATEN_APPEAL_SUBMISSION/
+SKATTEETATEN_VIGDIS_REPLY_JUNE_12/
+SCHOOL_APPLICATION_PHASE/
+SUCCESS_PLAN/
+lege erklæring/
+skatt/
+tiblsi/
+scratch/
+.agents/
+.DS_Store
+node_modules
+node_modules/
+.vercel
+.vercel/
+request_body.json
+save.txt
+modify_text.py
+build_dumont_site.py
+dumont_clean.css
+main.js
+style.css
+WHAT_SUCCESS_LOOKS_LIKE.md
+
+.git
+tests/
