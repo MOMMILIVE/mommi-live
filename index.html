@@ -611,7 +611,8 @@ html.lenis body {
     document.querySelectorAll('[data-framer-name="Service"]').forEach(el => {
       const titleP = el.querySelector('[data-framer-name="Title"] p');
       if (titleP && titleP.textContent !== 'Capabilities') titleP.textContent = 'Capabilities';
-      const textP = el.querySelector('[data-framer-name="Text"] p');
+      const textContainer = el.querySelector(':scope > [data-framer-name="Text"]');
+      const textP = textContainer ? textContainer.querySelector('p') : null;
       if (textP) {
         textP.innerHTML = 'High-Fashion Art Direction<br class="framer-text">Visual Capital Architecture<br class="framer-text">Spatial Brutalism &amp; Scenography<br class="framer-text">Sovereign Aesthetic Strategy<br class="framer-text">Monochromatic Form Studies<br class="framer-text">Algorithmic Image Systems<br class="framer-text">Private Extractions &amp; Brand Reconstruction';
       }
@@ -621,7 +622,8 @@ html.lenis body {
     document.querySelectorAll('[data-framer-name="Honers"]').forEach(el => {
       const titleP = el.querySelector('[data-framer-name="Title"] p');
       if (titleP && titleP.textContent !== 'Citations // Clearances') titleP.textContent = 'Citations // Clearances';
-      const textP = el.querySelector('[data-framer-name="Text"] p');
+      const textContainer = el.querySelector(':scope > [data-framer-name="Text"]');
+      const textP = textContainer ? textContainer.querySelector('p') : null;
       if (textP) {
         textP.innerHTML = 'First Order Syndicate Clearance, 2026<br class="framer-text">European Visual Architecture Citation, 2025<br class="framer-text">Nordic Sovereign Mandate, 2025<br class="framer-text">Continental Directorate Archive Seal, 2024<br class="framer-text">Paris—Milan Haute Couture Protocol, 2024';
       }
