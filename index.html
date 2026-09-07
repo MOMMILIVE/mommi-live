@@ -667,7 +667,7 @@ html.lenis body {
       const textContainer = el.querySelector(':scope > [data-framer-name="Text"]');
       const textP = textContainer ? textContainer.querySelector('p') : null;
       if (textP) {
-        textP.innerHTML = 'High-Fashion Art Direction<br class="framer-text">Visual Capital Architecture<br class="framer-text">Spatial Brutalism &amp; Scenography<br class="framer-text">Sovereign Aesthetic Strategy<br class="framer-text">Monochromatic Form Studies<br class="framer-text">Algorithmic Image Systems<br class="framer-text">Private Extractions &amp; Brand Reconstruction';
+        textP.innerHTML = 'High-Fashion Art Direction<br class="framer-text">Visual Capital Architecture<br class="framer-text">Spatial Brutalism &amp; Scenography<br class="framer-text">Sovereign Aesthetic Strategy<br class="framer-text">Monochromatic Form Studies<br class="framer-text">Algorithmic Image Systems<br class="framer-text">Private Extractions &amp; Brand Reconstruction<br class="framer-text">4-Day Private Extraction Protocol (Mandate Only)';
       }
     });
 
@@ -896,7 +896,7 @@ html.lenis body {
       "+40 22 312 14 60": "Encrypted Dispatch // Mandate Only",
 
       // Journal Page: Headlines & Immersive Protocol Treatises
-      "Subscribe to Newsletter": "Private Dispatch // Mandate",
+      "Subscribe to Newsletter": "Initiate 4-Day Protocol",
       "Beauty Photography": "Visual Capital",
       "How reflection, skin and pale fabric became the quiet architecture of a photographic study": "The Architecture of Visual Capital: Beyond Advertising and Image Systems",
       "Music Portraits": "Immersive Protocol",
@@ -1196,7 +1196,7 @@ html.lenis body {
 
       // About Page: Services / Capabilities block
       if (raw.includes("Creative DirectionPhotographyArt Direction") || (raw.includes("Creative Direction") && raw.includes("Retouching"))) {
-        el.innerHTML = 'High-Fashion Art Direction<br class="framer-text">Visual Capital Architecture<br class="framer-text">Spatial Brutalism &amp; Scenography<br class="framer-text">Sovereign Aesthetic Strategy<br class="framer-text">Monochromatic Form Studies<br class="framer-text">Algorithmic Image Systems<br class="framer-text">Private Extractions &amp; Brand Reconstruction';
+        el.innerHTML = 'High-Fashion Art Direction<br class="framer-text">Visual Capital Architecture<br class="framer-text">Spatial Brutalism &amp; Scenography<br class="framer-text">Sovereign Aesthetic Strategy<br class="framer-text">Monochromatic Form Studies<br class="framer-text">Algorithmic Image Systems<br class="framer-text">Private Extractions &amp; Brand Reconstruction<br class="framer-text">4-Day Private Extraction Protocol (Mandate Only)';
         return;
       }
 
@@ -1339,6 +1339,13 @@ html.lenis body {
           if (window.updateMobileLogo) window.updateMobileLogo();
         }, delay);
       });
+    }
+  }, true);
+
+  document.addEventListener('submit', function(e) {
+    if (e.target && e.target.tagName === 'FORM') {
+      e.preventDefault();
+      window.location.href = "mailto:access@mommilive.com?subject=Mandate%20Request:%204-Day%20Private%20Extraction%20Protocol";
     }
   }, true);
 
