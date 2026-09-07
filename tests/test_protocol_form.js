@@ -24,6 +24,9 @@ const { chromium } = require('playwright');
 
   await page.waitForTimeout(500);
 
+  const evalMailto = await page.evaluate(() => window.__lastMailto);
+  if (evalMailto) mailtoTriggered = evalMailto;
+
   if (mailtoTriggered) {
     console.log("SUCCESS: mailto triggered:", mailtoTriggered);
     process.exit(0);

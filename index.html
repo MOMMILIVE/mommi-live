@@ -1483,7 +1483,13 @@ html.lenis body {
   document.addEventListener('submit', function(e) {
     if (e.target && e.target.tagName === 'FORM') {
       e.preventDefault();
-      window.location.href = "mailto:access@mommilive.com?subject=Mandate%20Request:%204-Day%20Private%20Extraction%20Protocol";
+      const emailInput = e.target.querySelector('input[type="email"]');
+      const emailVal = emailInput ? emailInput.value.trim() : '';
+      const subject = encodeURIComponent("Mandate Request: 4-Day Private Extraction Protocol");
+      const body = emailVal ? encodeURIComponent("Client Dispatch Email: " + emailVal) : "";
+      const mailtoUrl = "mailto:access@mommilive.com?subject=" + subject + (body ? "&body=" + body : "");
+      window.__lastMailto = mailtoUrl;
+      window.location.href = mailtoUrl;
     }
   }, true);
 
