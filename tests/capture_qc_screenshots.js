@@ -45,6 +45,12 @@ async function captureScreenshots() {
   await deskPage.screenshot({ path: 'screenshots/desktop_campaign_pagination.png' });
   console.log('Captured desktop_campaign_pagination.png');
 
+  // 6. Mobile (390px) footer email
+  await mobPage.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+  await mobPage.waitForTimeout(600);
+  await mobPage.screenshot({ path: 'screenshots/mobile_footer_email.png' });
+  console.log('Captured mobile_footer_email.png');
+
   await browser.close();
 }
 

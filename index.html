@@ -78,6 +78,8 @@ a[data-framer-name="Slider Mob"] {
 /* Hide Framer badges and ads */
 #__framer-badge-container,
 #__framer-editorbar,
+.__framer-badge,
+a[href*="framer.com"],
 .framer-1p5jpwp-container,
 .framer-c1ymvx-container,
 [data-framer-name="Button ads"],
@@ -114,10 +116,13 @@ a[data-framer-name="Desktop Primary"][tabindex="0"] {
   }
 }
 
-/* Monochromatic next-campaign pagination link on /photographs/* */
+/* Monochromatic next-campaign pagination link on /photographs/* and mailto links */
 .framer-168n8wr-container a,
 .framer-168n8wr-container a:hover,
-.framer-168n8wr-container a:visited {
+.framer-168n8wr-container a:visited,
+a[href*="mailto"],
+a[href*="mailto"]:hover,
+a[href*="mailto"]:visited {
   color: rgb(0, 0, 0) !important;
   text-decoration: none !important;
 }
@@ -128,6 +133,18 @@ a[data-framer-name="Desktop Primary"][tabindex="0"] {
 [data-framer-name="Press"] [data-framer-name="Group"] {
   height: auto !important;
   min-height: 20px !important;
+  overflow: visible !important;
+}
+
+/* Suppress hover duplicate text layer on non-interactive citations to avoid duplicated titles */
+[data-framer-name="Press"] [data-framer-name="Text 2"],
+[data-framer-name="Press"] .framer-qlgcmy {
+  display: none !important;
+}
+
+[data-framer-name="Press"] [data-framer-name="Text 1"],
+[data-framer-name="Press"] .framer-1h9mpfo {
+  height: auto !important;
   overflow: visible !important;
 }
 
@@ -614,9 +631,19 @@ html.lenis body {
 
     document.querySelectorAll('a[href*="mailto"], a[href*="dumont"], a[href*="pulvinar"], a[href*="momentlive"]').forEach(el => {
       el.href = 'mailto:access@mommilive.com';
-      if (el.textContent && el.textContent.includes('@')) {
+      const ps = el.querySelectorAll('p, span');
+      if (ps.length > 0) {
+        ps.forEach(p => {
+          if (p.textContent && (p.textContent.includes('@') || p.textContent.includes('dumont') || p.textContent.includes('momentlive') || p.textContent.includes('mommilive'))) {
+            p.textContent = 'access@mommilive.com';
+            p.style.color = 'rgb(0, 0, 0)';
+          }
+        });
+      } else if (el.textContent && el.textContent.includes('@')) {
         el.textContent = 'access@mommilive.com';
       }
+      el.style.color = 'rgb(0, 0, 0)';
+      el.style.textDecoration = 'none';
     });
 
     // Update Address / Location in menu and about page
@@ -772,7 +799,7 @@ html.lenis body {
 
     // Defect 1: Update Photos / Categories Page Heading to Directives
     if (window.location.pathname.includes('/photos') || window.location.pathname.includes('/categories')) {
-      document.querySelectorAll('.framer-1mehox8 p, .framer-1131ifz p, .framer-15eeoyh p, [data-framer-name="Text"] p').forEach(el => {
+      document.querySelectorAll('.framer-1mehox8 p, .framer-1131ifz p, .framer-15eeoyh p, .framer-1pkcb5d p, .framer-1acng8 p, .framer-1ywi5mr p, .framer-1cyrosm p, [data-framer-name="Text"] p').forEach(el => {
         if (el.textContent.trim() === 'Photos') {
           el.textContent = 'Directives';
         }

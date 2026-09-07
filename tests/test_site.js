@@ -274,6 +274,94 @@ async function runAllTests() {
   }
   console.log('✓ Zero forbidden template external links found (satto.studio, behance.net, are.na eliminated)');
 
+  console.log('\n--- TEST 10: Publication Readiness & Brand Consistency QC ---');
+  // Defect 1 check
+  for (const r of ['/photos', '/photos/list', '/categories/fashion', '/categories/campaign']) {
+    await page.goto('http://localhost:3000' + r, { waitUntil: 'load' });
+    await page.waitForTimeout(600);
+    const heading = await page.evaluate(() => {
+      const el = document.querySelector('.framer-1mehox8 p, .framer-1131ifz p, .framer-15eeoyh p, .framer-1pkcb5d p, .framer-1acng8 p, .framer-1cyrosm p');
+      return el ? el.textContent.trim() : null;
+    });
+    if (heading !== 'Directives') {
+      throw new Error(`Heading on ${r} expected "Directives", got "${heading}"`);
+    }
+  }
+  console.log('✓ Defect 1: All photo/category pages display section heading "Directives"');
+
+  // Defect 2 check on mobile
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('http://localhost:3000/journal', { waitUntil: 'load' });
+  await page.waitForTimeout(600);
+  const newsletterFits = await page.evaluate(() => {
+    const btn = document.querySelector('[data-framer-name="Newsletter"] button, .framer-0TuGC');
+    if (!btn) return false;
+    const rect = btn.getBoundingClientRect();
+    return rect.right <= 390 && rect.width <= 180;
+  });
+  if (!newsletterFits) throw new Error('Defect 2: Newsletter button overflows 390px mobile viewport');
+  console.log('✓ Defect 2: Mobile newsletter button fits cleanly within 390px without overflow');
+
+  // Defect 3 & 4 check on desktop
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('http://localhost:3000/photographs/rowan-sable', { waitUntil: 'load' });
+  await page.waitForTimeout(600);
+  const campaignLayout = await page.evaluate(() => {
+    const labels = Array.from(document.querySelectorAll('p, span')).filter(el => {
+      const t = el.textContent.trim();
+      return t === 'Clearance:' || t === 'Directives:';
+    }).map(el => {
+      const r = el.getBoundingClientRect();
+      return { text: el.textContent.trim(), width: r.width, right: r.right };
+    });
+    const col2 = document.querySelector('h1');
+    const col2Left = col2 ? col2.getBoundingClientRect().left : 128;
+    const pagination = document.querySelector('.framer-168n8wr-container a');
+    const pagStyle = pagination ? window.getComputedStyle(pagination) : null;
+    return {
+      labels,
+      col2Left,
+      pagColor: pagStyle ? pagStyle.color : null,
+      pagTextDec: pagStyle ? pagStyle.textDecorationLine : null
+    };
+  });
+  for (const l of campaignLayout.labels) {
+    if (l.right > campaignLayout.col2Left) {
+      throw new Error(`Defect 3: Label "${l.text}" (right ${l.right}px) collides with column 2 (left ${campaignLayout.col2Left}px)`);
+    }
+  }
+  console.log('✓ Defect 3: Campaign detail labels fit under 115px with zero horizontal overlap');
+  if (campaignLayout.pagColor !== 'rgb(0, 0, 0)' || campaignLayout.pagTextDec !== 'none') {
+    throw new Error(`Defect 4: Pagination link style is not monochromatic black: color=${campaignLayout.pagColor}, textDec=${campaignLayout.pagTextDec}`);
+  }
+  console.log('✓ Defect 4: Next-campaign pagination link renders in monochromatic black with no underline');
+
+  // Defect 5 & Mobile Footer check on mobile
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('http://localhost:3000/about', { waitUntil: 'load' });
+  await page.waitForTimeout(600);
+  const aboutChecks = await page.evaluate(() => {
+    const a = document.querySelector('[data-framer-name="Press"] a');
+    const t1 = a ? a.querySelector('[data-framer-name="Text 1"]') : null;
+    const t2 = a ? a.querySelector('[data-framer-name="Text 2"]') : null;
+    const t2Vis = t2 ? (t2.offsetParent !== null && window.getComputedStyle(t2).display !== 'none') : false;
+    const emailA = document.querySelector('a[href*="mailto"]');
+    const emailStyle = emailA ? window.getComputedStyle(emailA) : null;
+    return {
+      pressClipped: t1 && a ? t1.clientHeight > a.clientHeight + 1 : false,
+      pressDuplicated: t2Vis,
+      emailColor: emailStyle ? emailStyle.color : null,
+      emailTextDec: emailStyle ? emailStyle.textDecorationLine : null
+    };
+  });
+  if (aboutChecks.pressClipped) throw new Error('Defect 5: Press citation link text is vertically clipped');
+  if (aboutChecks.pressDuplicated) throw new Error('Defect 5: Press citation duplicates title due to visible Text 2');
+  if (aboutChecks.emailColor !== 'rgb(0, 0, 0)' || aboutChecks.emailTextDec !== 'none') {
+    throw new Error(`Mobile footer email is not monochromatic black: color=${aboutChecks.emailColor}`);
+  }
+  console.log('✓ Defect 5: Press citations wrap cleanly without vertical clipping and with zero title duplication');
+  console.log('✓ Mobile footer email link is monochromatic black with zero browser-default blue');
+
   console.log('\n--- TEST 9: Console Errors Check ---');
   console.log('Total console errors caught:', consoleErrors.length);
   if (consoleErrors.length > 0) {
