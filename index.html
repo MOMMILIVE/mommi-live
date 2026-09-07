@@ -114,6 +114,32 @@ a[data-framer-name="Desktop Primary"][tabindex="0"] {
   }
 }
 
+/* Monochromatic next-campaign pagination link on /photographs/* */
+.framer-168n8wr-container a,
+.framer-168n8wr-container a:hover,
+.framer-168n8wr-container a:visited {
+  color: rgb(0, 0, 0) !important;
+  text-decoration: none !important;
+}
+
+/* Responsive press & citation link wrapping on /about */
+[data-framer-name="Press"] a,
+[data-framer-name="Press"] .framer-13kbhyk,
+[data-framer-name="Press"] [data-framer-name="Group"] {
+  height: auto !important;
+  min-height: 20px !important;
+  overflow: visible !important;
+}
+
+/* Prevent newsletter form horizontal overflow on mobile viewports */
+@media (max-width: 809.98px) {
+  .framer-0TuGC,
+  [data-framer-name="Newsletter"] {
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+}
+
 </style>
 	
 	
@@ -744,6 +770,26 @@ html.lenis body {
       });
     }
 
+    // Defect 1: Update Photos / Categories Page Heading to Directives
+    if (window.location.pathname.includes('/photos') || window.location.pathname.includes('/categories')) {
+      document.querySelectorAll('.framer-1mehox8 p, .framer-1131ifz p, .framer-15eeoyh p, [data-framer-name="Text"] p').forEach(el => {
+        if (el.textContent.trim() === 'Photos') {
+          el.textContent = 'Directives';
+        }
+      });
+    }
+
+    // Back Link Consistency: Update Back link on /photographs/*
+    if (window.location.pathname.includes('/photographs')) {
+      document.querySelectorAll('a[href*="/photographs"], a[href="../photographs"]').forEach(a => {
+        a.querySelectorAll('p, span').forEach(el => {
+          if (el.textContent.trim() === 'Back to photographs') {
+            el.textContent = 'Back to campaigns';
+          }
+        });
+      });
+    }
+
     // 1. Exact term replacements across all text nodes
     const exactReplacements = {
       // About Page: Client roster replacements
@@ -801,10 +847,10 @@ html.lenis body {
 
       // Section labels
       "Introduction:": "Mandate Dossier:",
-      "Practice": "Syndicate Directives",
+      "Practice": "Directives:",
       "Clients:": "Commission Roster:",
       "Honors:": "Institutional Citations:",
-      "Profile": "Clearance // Profile",
+      "Profile": "Clearance:",
       "Works": "Archived Extractions",
       "Project:": "Mandate:",
       "Photographer:": "Principal:",
@@ -815,11 +861,15 @@ html.lenis body {
       "Director Spotlight": "Syndicate Directorate",
       "Belle Smith": "Mommi Live Directorate",
 
+      // Navigation / Heading consistency
+      "Photos": "Directives",
+      "Back to photographs": "Back to campaigns",
+
       // Contact & Phone Sanitization
       "+40 22 312 14 60": "Encrypted Dispatch // Mandate Only",
 
       // Journal Page: Headlines & Immersive Protocol Treatises
-      "Subscribe to Newsletter": "Private Dispatch / By Mandate Only",
+      "Subscribe to Newsletter": "Private Dispatch // Mandate",
       "Beauty Photography": "Visual Capital",
       "How reflection, skin and pale fabric became the quiet architecture of a photographic study": "The Architecture of Visual Capital: Beyond Advertising and Image Systems",
       "Music Portraits": "Immersive Protocol",

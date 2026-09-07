@@ -141,13 +141,13 @@ async function runAllTests() {
   if (!page.url().includes('/photographs/rowan-sable')) {
     throw new Error('Clicking PRADA card did not navigate to /photographs/rowan-sable');
   }
-  // Test clicking "Back to photographs"
-  console.log('Clicking "Back to photographs"...');
-  await page.click('text=Back to photographs');
+  // Test clicking "Back to campaigns"
+  console.log('Clicking "Back to campaigns"...');
+  await page.click('text=Back to campaigns');
   await page.waitForTimeout(1200);
   console.log('  -> URL after back click:', page.url());
   if (!page.url().endsWith('/photographs')) {
-    throw new Error('Back to photographs did not return to /photographs');
+    throw new Error('Back to campaigns did not return to /photographs');
   }
   console.log('✓ Individual photo card navigation and back button work correctly');
 

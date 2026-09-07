@@ -153,8 +153,8 @@ async function testCampaignAura() {
     if (!pageText.includes('Mandate Dossier:') && !pageText.includes('Mandate Dossier')) {
       throw new Error(`Missing "Mandate Dossier:" label on ${url}`);
     }
-    if (!pageText.includes('Syndicate Directives')) {
-      throw new Error(`Missing "Syndicate Directives" label on ${url}`);
+    if (!pageText.includes('Directives:') && !pageText.includes('Syndicate Directives')) {
+      throw new Error(`Missing "Directives:" label on ${url}`);
     }
     if (!pageText.includes('Commission Roster:') && !pageText.includes('Commission Roster')) {
       throw new Error(`Missing "Commission Roster:" label on ${url}`);
@@ -371,7 +371,7 @@ async function testCampaignAura() {
 
   // Click Back
   console.log('Navigating back to /photographs...');
-  await page.click('text=Back to photographs');
+  await page.click('text=Back to campaigns');
   await page.waitForTimeout(800);
 
   // Click VOGUE SCANDINAVIA
