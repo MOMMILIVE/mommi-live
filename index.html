@@ -600,11 +600,47 @@ html.lenis body {
       }
     });
 
-    // About Page: Update Info bio
+    // About Page: Update Info bio to Sovereign Ghost Auteur manifesto
     document.querySelectorAll('p').forEach(p => {
-      if (p.textContent.includes('creative studio') && (p.textContent.includes('Dumont') || p.textContent.includes('Paris-based') || p.textContent.includes('European'))) {
-        p.textContent = 'Mommi Live is a European creative syndicate and visual intelligence practice working across photography, visual identity, art direction, and digital experiences. We collaborate with photographers, artists, fashion labels, cultural institutions, and independent brands to create visual systems built around strong images. Our approach brings together editorial sensitivity and strategic thinking, allowing each project to develop its own distinctive language. From campaigns and publications to portfolios and digital platforms, we shape every detail around the character of the work. We believe photography should not simply decorate an identity—it should define its atmosphere, rhythm, and point of view.';
+      if ((p.textContent.includes('creative studio') || p.textContent.includes('creative syndicate')) && (p.textContent.includes('Dumont') || p.textContent.includes('Paris-based') || p.textContent.includes('European') || p.textContent.includes('Mommi Live'))) {
+        p.textContent = 'Mommi Live is an exclusive European creative syndicate and visual intelligence practice operating across high-fashion art direction, sovereign aesthetic strategy, spatial brutalism, and visual capital architecture. We execute private commissions for continental fashion houses, sovereign wealth desks, and cultural institutions under strict non-disclosure. Enforcing monolithic restraint, shadow subtraction, and deliberate spatial choreography, our mandate is not commercial decoration—it is the construction of sovereign visual capital.';
       }
+    });
+
+    // About Page: Update Services (Capabilities)
+    document.querySelectorAll('[data-framer-name="Service"]').forEach(el => {
+      const titleP = el.querySelector('[data-framer-name="Title"] p');
+      if (titleP && titleP.textContent !== 'Capabilities') titleP.textContent = 'Capabilities';
+      const textP = el.querySelector('[data-framer-name="Text"] p');
+      if (textP) {
+        textP.innerHTML = 'High-Fashion Art Direction<br class="framer-text">Visual Capital Architecture<br class="framer-text">Spatial Brutalism &amp; Scenography<br class="framer-text">Sovereign Aesthetic Strategy<br class="framer-text">Monochromatic Form Studies<br class="framer-text">Algorithmic Image Systems<br class="framer-text">Private Extractions &amp; Brand Reconstruction';
+      }
+    });
+
+    // About Page: Update Honors (Institutional Citations & Clearances)
+    document.querySelectorAll('[data-framer-name="Honers"]').forEach(el => {
+      const titleP = el.querySelector('[data-framer-name="Title"] p');
+      if (titleP && titleP.textContent !== 'Citations // Clearances') titleP.textContent = 'Citations // Clearances';
+      const textP = el.querySelector('[data-framer-name="Text"] p');
+      if (textP) {
+        textP.innerHTML = 'First Order Syndicate Clearance, 2026<br class="framer-text">European Visual Architecture Citation, 2025<br class="framer-text">Nordic Sovereign Mandate, 2025<br class="framer-text">Continental Directorate Archive Seal, 2024<br class="framer-text">Paris—Milan Haute Couture Protocol, 2024';
+      }
+    });
+
+    // About Page: Deduplicate & Curate Client Roster
+    const sovereignClients = [
+      "Prada", "Vogue Scandinavia", "ORA × GQ", "Harley-Davidson",
+      "Sony Music", "Spotify Nordic", "Holzweiler", "Immersive Protocol",
+      "Oslo Runway", "Astalico", "PersonaClo", "Revenue Syndicate"
+    ];
+    document.querySelectorAll('[data-framer-name="Clients"]').forEach(clientsContainer => {
+      const clientLinks = clientsContainer.querySelectorAll('a');
+      clientLinks.forEach((a, idx) => {
+        const clientName = sovereignClients[idx % sovereignClients.length];
+        a.querySelectorAll('p').forEach(p => {
+          if (p.textContent !== clientName) p.textContent = clientName;
+        });
+      });
     });
 
     // Update Social / External Links across /about, menu, footer to authentic Mommi Live profiles
@@ -1076,6 +1112,18 @@ html.lenis body {
       const raw = el.textContent.trim();
       if (exactReplacements[raw]) {
         el.textContent = exactReplacements[raw];
+        return;
+      }
+
+      // About Page: Services / Capabilities block
+      if (raw.includes("Creative DirectionPhotographyArt Direction") || (raw.includes("Creative Direction") && raw.includes("Retouching"))) {
+        el.innerHTML = 'High-Fashion Art Direction<br class="framer-text">Visual Capital Architecture<br class="framer-text">Spatial Brutalism &amp; Scenography<br class="framer-text">Sovereign Aesthetic Strategy<br class="framer-text">Monochromatic Form Studies<br class="framer-text">Algorithmic Image Systems<br class="framer-text">Private Extractions &amp; Brand Reconstruction';
+        return;
+      }
+
+      // About Page: Honors / Institutional Citations & Clearances block
+      if (raw.includes("X3 D&AD") || raw.includes("Graphis Photography Annual") || (raw.includes("D&AD") && raw.includes("Webby Awards"))) {
+        el.innerHTML = 'First Order Syndicate Clearance, 2026<br class="framer-text">European Visual Architecture Citation, 2025<br class="framer-text">Nordic Sovereign Mandate, 2025<br class="framer-text">Continental Directorate Archive Seal, 2024<br class="framer-text">Paris—Milan Haute Couture Protocol, 2024';
         return;
       }
 
