@@ -895,16 +895,22 @@ html.lenis body {
       // Contact & Phone Sanitization
       "+40 22 312 14 60": "Encrypted Dispatch // Mandate Only",
 
-      // Journal Page: Headlines & Immersive Protocol Treatises
+      // Journal Page: Headlines & Immersive Protocol Treatises (4-Day Private Extraction Protocol)
       "Subscribe to Newsletter": "Initiate 4-Day Protocol",
-      "Beauty Photography": "Visual Capital",
+      "Beauty Photography": "Day 01 // Tactical Scenography",
+      "June 04": "Day 01",
       "How reflection, skin and pale fabric became the quiet architecture of a photographic study": "The Architecture of Visual Capital: Beyond Advertising and Image Systems",
-      "Music Portraits": "Immersive Protocol",
-      "Portrait Studies": "The Ghost Auteur",
-      "Fashion Editorial": "High Fashion Direction",
-      "Location Stories": "Frame Control",
+      "Music Portraits": "Day 02 // Frame Control",
+      "June 11": "Day 02",
+      "Portrait Studies": "Day 03 // Nocturnal Lifestyle Embedding",
+      "June 18": "Day 03",
+      "Fashion Editorial": "Day 04 // Visual Capital Synthesis",
+      "June 25": "Day 04",
+      "Location Stories": "Protocol Dossier // Brand Reconstruction",
+      "July 02": "Protocol I",
       "On stone, linen and salt air as the material language of a coastal shoot": "The Georgia Protocol: 4-Day Private Extractions and Brand Reconstruction in Tbilisi",
-      "Campaign Notes": "Syndicate Dossier",
+      "Campaign Notes": "Syndicate Mandate // Release Directives",
+      "July 09": "Protocol II",
       "How pigment, reflection and visible texture reshape the mood of contemporary beauty photography": "Monochromatic Restraint: Visual Capital and Surface Subtraction",
       "A pale fashion editorial where silence, fabric and small gestures carry the frame": "Haute Couture Mandate: Architectural Silhouette Framing",
       "Inside the smoke, projection and fractured light shaping a new experimental music portrait": "Sonic Space Construction: Acoustic Spatialization and Suppressed Illumination",
@@ -1116,6 +1122,46 @@ html.lenis body {
       }
     };
 
+    // 3. Journal Treatises (4-Day Private Extraction Protocol)
+    const journalTreatises = {
+      "quiet-study-skin-glass-late-afternoon-light": {
+        slug: "quiet-study-skin-glass-late-afternoon-light",
+        type: "Day 01 // Tactical Scenography",
+        date: "Day 01",
+        title: "The Architecture of Visual Capital: Beyond Advertising and Image Systems"
+      },
+      "smoke-filled-set-fractured-music-portrait": {
+        slug: "smoke-filled-set-fractured-music-portrait",
+        type: "Day 02 // Frame Control",
+        date: "Day 02",
+        title: "Sonic Space Construction: Acoustic Spatialization and Suppressed Illumination"
+      },
+      "soft-architecture-intimate-portraits": {
+        slug: "soft-architecture-intimate-portraits",
+        type: "Day 03 // Nocturnal Lifestyle Embedding",
+        date: "Day 03",
+        title: "Spatial Brutalism: Volumetric Light and Private Asset Framing"
+      },
+      "pale-fashion-story-gesture-silence": {
+        slug: "pale-fashion-story-gesture-silence",
+        type: "Day 04 // Visual Capital Synthesis",
+        date: "Day 04",
+        title: "Haute Couture Mandate: Architectural Silhouette Framing"
+      },
+      "natural-materiality-coastal-shoot": {
+        slug: "natural-materiality-coastal-shoot",
+        type: "Protocol Dossier // Brand Reconstruction",
+        date: "Protocol I",
+        title: "The Georgia Protocol: 4-Day Private Extractions and Brand Reconstruction in Tbilisi"
+      },
+      "color-texture-presence-fictional-beauty-campaign": {
+        slug: "color-texture-presence-fictional-beauty-campaign",
+        type: "Syndicate Mandate // Release Directives",
+        date: "Protocol II",
+        title: "Monochromatic Restraint: Visual Capital and Surface Subtraction"
+      }
+    };
+
     const curPath = window.location.pathname.toLowerCase();
 
     // Specific structural updater for /photographs/*
@@ -1176,6 +1222,63 @@ html.lenis body {
       }
     }
 
+    // Specific structural updater for /journal and /journal/* (4-Day Private Extraction Protocol)
+    if (curPath.includes("/journal")) {
+      // 1. Hero Title & Editorial Subtitle on /journal
+      const journalTitleP = document.querySelector('[data-framer-name="Hero section"] [data-framer-name="Title"] p, .framer-eoy2ik p');
+      if (journalTitleP && !journalTitleP.innerHTML.includes('Extraction Protocol')) {
+        journalTitleP.innerHTML = 'Journal<br class="framer-text"><span class="framer-text" style="font-size:10px;letter-spacing:0.04em;text-transform:uppercase;color:rgb(130,130,130);display:block;margin-top:4px;line-height:1.3;font-weight:400;">4-Day Private Extraction Protocol</span>';
+      }
+
+      const emailInput = document.querySelector('input[type="email"]');
+      if (emailInput && emailInput.getAttribute('placeholder') !== 'Mandate Dispatch Email') {
+        emailInput.setAttribute('placeholder', 'Mandate Dispatch Email');
+      }
+
+      // 2. Journal Cards on /journal index
+      document.querySelectorAll('a[href*="/journal/"], a[href*="journal/"]').forEach(a => {
+        const href = a.getAttribute('href') || '';
+        for (const [slug, item] of Object.entries(journalTreatises)) {
+          if (href.includes(slug)) {
+            const typeEl = a.querySelector('[data-framer-name="Type"] p');
+            if (typeEl && typeEl.textContent !== item.type) typeEl.textContent = item.type;
+            const dateEl = a.querySelector('[data-framer-name="Date"] p');
+            if (dateEl && dateEl.textContent !== item.date) dateEl.textContent = item.date;
+            const titleEl = a.querySelector('[data-framer-name="Title"] p');
+            if (titleEl && titleEl.textContent !== item.title) titleEl.textContent = item.title;
+            break;
+          }
+        }
+      });
+
+      // 3. Article detail pages (/journal/:slug)
+      for (const [slug, item] of Object.entries(journalTreatises)) {
+        if (curPath.includes(slug)) {
+          const typeEl = document.querySelector('[data-framer-name="Type"] p');
+          if (typeEl && typeEl.textContent !== item.type) typeEl.textContent = item.type;
+          const dateEl = document.querySelector('[data-framer-name="Date"] p');
+          if (dateEl && dateEl.textContent !== item.date) dateEl.textContent = item.date;
+          const h1El = document.querySelector('h1');
+          if (h1El && h1El.textContent !== item.title) h1El.textContent = item.title;
+          break;
+        }
+      }
+
+      // 4. Next-article preview thumbnails on article detail pages
+      document.querySelectorAll('a[href*="/journal/"], a[href^="./"]').forEach(a => {
+        const href = a.getAttribute('href') || '';
+        for (const [slug, item] of Object.entries(journalTreatises)) {
+          if (href.includes(slug) && !a.querySelector('[data-framer-name="Type"]')) {
+            const ps = a.querySelectorAll('p');
+            if (ps.length >= 2) {
+              if (ps[0] && ps[0].textContent !== item.type) ps[0].textContent = item.type;
+              if (ps[1] && ps[1].textContent !== item.title) ps[1].textContent = item.title;
+            }
+          }
+        }
+      });
+    }
+
     // Sanitize tel links and template phone number (+40 22 312 14 60)
     document.querySelectorAll('a[href*="tel"]').forEach(a => {
       a.removeAttribute('href');
@@ -1206,46 +1309,81 @@ html.lenis body {
         return;
       }
 
-      // Journal article body & lead paragraph aura replacements
-      if (raw.includes("The fashion story is built around pale interiors")) {
-        el.textContent = "Haute couture visual architecture. Sculptural form manipulation, suppressed lighting calibration, and private European extraction protocols.";
-        return;
-      } else if (raw.includes("Pale interiors and restrained gestures")) {
-        el.textContent = "Architectural silhouette framing and visual capital extraction across European spaces.";
-        return;
-      } else if (raw.includes("What gives the work its character is the discipline")) {
-        el.textContent = "Executed under private syndicate mandate. Minimalist restraint, calculated contrast, and institutional authority.";
-        return;
-      } else if (raw.includes("Smoke, projection and fractured light turn a music portrait")) {
-        el.textContent = "Sonic visual direction and acoustic space construction under restricted clearance.";
-        return;
-      } else if (raw.includes("The music portrait was designed as a study of interruption")) {
-        el.textContent = "Acoustic spatialization, suppressed illumination, and cryptographic visual identity systems.";
-        return;
-      } else if (raw.includes("For the final edit, the team avoided a clean documentary")) {
-        el.textContent = "Archived extractions for major release directives and sonic visual dominance.";
-        return;
-      } else if (raw.includes("Modernist rooms, window light and soft thresholds")) {
-        el.textContent = "Brutalist spatial architecture and volumetric shadow subtraction.";
-        return;
-      } else if (raw.includes("This portrait series begins with architecture")) {
-        el.textContent = "Private asset framing, structural discipline, and architectural authority across continental spaces.";
-        return;
-      } else if (raw.includes("The strongest images in the edit are the ones that leave room")) {
-        el.textContent = "Strict visual restraint. Subtractive lighting and sovereign spatial protocol.";
-        return;
-      } else if (raw.includes("Color, pigment and reflective surfaces create a tactile")) {
-        el.textContent = "Monochromatic surface study. High-density contrast calibration and visual capital strategy.";
-        return;
-      } else if (raw.includes("The series approaches photography as a quiet field")) {
-        el.textContent = "Private visual capital architecture. Monochromatic restraint and institutional gatekeeping.";
-        return;
-      } else if (raw.includes("In the second movement of the project")) {
-        el.textContent = "Permanent syndicate archive. High-capital visual intelligence and editorial authority.";
-        return;
-      } else if (raw.includes("Stone, linen, weathered wood and salt air guide")) {
-        el.textContent = "4-day private extraction protocol and sovereign brand reconstruction in Tbilisi.";
-        return;
+      // Journal article body & lead paragraph aura replacements (4-Day Private Extraction Protocol)
+      if (curPath.includes("/journal")) {
+        if (raw.includes("Reflection, skin and pale fabric") || raw.includes("Arrival, Spatial Infiltration")) {
+          el.textContent = "Arrival, Spatial Infiltration & Tactical Scenography.";
+          return;
+        } else if (raw.includes("The series approaches photography as a quiet field") || raw.includes("Day 01 protocol commences with private client fly-out") || raw.includes("Private visual capital architecture. Monochromatic restraint")) {
+          el.textContent = "Day 01 protocol commences with private client fly-out reception and direct extraction into calibrated architectural space. Visual capital is not generated through commercial decoration; it is extracted through volumetric concrete, controlled natural aperture, and monolithic spatial discipline. Infiltration begins with exhaustive location calibration across brutalist European structures, establishing lighting geometry that isolates sovereign authority before a single shutter actuation.";
+          return;
+        } else if (raw.includes("The second section follows how surface, set design") || raw.includes("Volumetric Shadow Calibration")) {
+          el.textContent = "Volumetric Shadow Calibration & Frame Architecture.";
+          return;
+        } else if (raw.includes("In the second movement of the project") || raw.includes("The initial visual capture maps architectural mass") || raw.includes("Permanent syndicate archive. High-capital visual intelligence")) {
+          el.textContent = "The initial visual capture maps architectural mass against subject posture. Lighting setups eliminate consumer-grade fill, prioritizing negative space, razor-edge falloff, and monochromatic surface tension. Every frame establishes an institutional baseline: the subject does not pose for an audience—the subject occupies physical and cultural territory under syndicate protection.";
+          return;
+        } else if (raw.includes("Smoke, projection and fractured light") || raw.includes("Sonic visual direction and acoustic space") || raw.includes("High-Fashion Direction, Wardrobe Architecture")) {
+          el.textContent = "High-Fashion Direction, Wardrobe Architecture & Frame Control.";
+          return;
+        } else if (raw.includes("The music portrait was designed as a study of interruption") || raw.includes("Acoustic spatialization, suppressed illumination") || raw.includes("Day 02 enforces absolute frame dominance")) {
+          el.textContent = "Day 02 enforces absolute frame dominance through architectural haute couture styling and biometric posture alignment. Wardrobe selection rejects seasonal consumer fashion in favor of structural garments—custom silhouettes, sculptural overcoats, and sharp textural contrasts engineered to command high-status cultural perception. Each silhouette is tested against suppressed illumination to ensure iconic legibility at extreme crop ratios.";
+          return;
+        } else if (raw.includes("The final edit reads like a performance score") || raw.includes("Subtractive Lighting & High-Aura")) {
+          el.textContent = "Subtractive Lighting & High-Aura Monochromatic Calibration.";
+          return;
+        } else if (raw.includes("For the final edit, the team avoided a clean documentary") || raw.includes("Archived extractions for major release directives") || raw.includes("Working in dense atmospheric set design")) {
+          el.textContent = "Working in dense atmospheric set design with controlled haze and focused hard-edge beams, camera movement is stripped down to rigid, authoritative axes. Posture direction shifts from performance to cold sovereignty: micro-gestures, jawline tension, and unyielding gaze vectors that communicate absolute gatekeeping and uncompromising power.";
+          return;
+        } else if (raw.includes("Modernist rooms, window light and soft thresholds") || raw.includes("Brutalist spatial architecture and volumetric shadow") || raw.includes("Nocturnal Lifestyle Framing & Sovereign Network")) {
+          el.textContent = "Nocturnal Lifestyle Framing & Sovereign Network Embedding.";
+          return;
+        } else if (raw.includes("This portrait series begins with architecture") || raw.includes("Private asset framing, structural discipline") || raw.includes("Day 03 deploys the principal into exclusive nocturnal")) {
+          el.textContent = "Day 03 deploys the principal into exclusive nocturnal environments, private members' clubs, and curated high-network social nodes. Lifestyle framing avoids gratuitous flash; instead, it deploys candid low-light extraction, harsh direct flash framing against raw brutalist stone, and intentional blurred proximity to institutional figures. The resulting assets frame effortless cultural access and unpurchasable social gravity.";
+          return;
+        } else if (raw.includes("The edit finds meaning in posture, negative space") || raw.includes("Private Club Logistics & Unfiltered Social")) {
+          el.textContent = "Private Club Logistics & Unfiltered Social Capital Capture.";
+          return;
+        } else if (raw.includes("The strongest images in the edit are the ones that leave room") || raw.includes("Strict visual restraint. Subtractive lighting") || raw.includes("Through non-linear capture across private dinners")) {
+          el.textContent = "Through non-linear capture across private dinners, after-hours lounges, and restricted club balconies, the protocol captures the sovereign lifestyle in motion. High-grain analog textures and strobe-lit architectural corners construct an indisputable dossier of social elevation—positioning the client as a permanent fixture within the continental creative and capital elite.";
+          return;
+        } else if (raw.includes("Pale interiors and restrained gestures") || raw.includes("Architectural silhouette framing and visual capital") || raw.includes("Visual Capital Synthesis & Global Release Mandate")) {
+          el.textContent = "Visual Capital Synthesis & Global Release Mandate.";
+          return;
+        } else if (raw.includes("The fashion story is built around pale interiors") || raw.includes("Haute couture visual architecture. Sculptural form manipulation") || raw.includes("Day 04 culminates the physical extraction")) {
+          el.textContent = "Day 04 culminates the physical extraction with comprehensive asset synthesis, final master grading, and strategic release planning. All capture streams—monochromatic studio portraits, brutalist architectural stills, dynamic motion clips, and nocturnal party captures—are synthesized into a cohesive sovereign asset vault. Every grade adheres to deep European contrast profiles, muted neutrals, and surgical sharpness.";
+          return;
+        } else if (raw.includes("Minimal objects, soft texture and careful framing") || raw.includes("Institutional Gatekeeping & High-Yield")) {
+          el.textContent = "Institutional Gatekeeping & High-Yield Asset Delivery.";
+          return;
+        } else if (raw.includes("What gives the work its character is the discipline") || raw.includes("Executed under private syndicate mandate. Minimalist restraint") || raw.includes("The syndicate directorate executes final sequencing")) {
+          el.textContent = "The syndicate directorate executes final sequencing: primary hero stills for international press releases, bespoke vertical crops calibrated for high-conversion social dominance, and archived master prints. Upon completion of Day 04, the client departs with a complete, untouchable visual identity system ready for multi-channel deployment.";
+          return;
+        } else if (raw.includes("Stone, linen, weathered wood and salt air guide") || raw.includes("4-day private extraction protocol and sovereign brand reconstruction in Tbilisi") || raw.includes("Sovereign Brand Reconstruction & The Tbilisi Extraction")) {
+          el.textContent = "Sovereign Brand Reconstruction & The Tbilisi Extraction Mandate.";
+          return;
+        } else if (raw.includes("The coastal shoot frames natural materiality as both subject and method") || raw.includes("The Georgia Protocol represents our flagship 4-day")) {
+          el.textContent = "The Georgia Protocol represents our flagship 4-day immersive extraction deployment. Operating within the concrete brutalism, underground subcultural institutions, and raw post-Soviet architectural topography of Tbilisi, clients undergo radical visual repositioning. Away from familiar domestic environments, the client is placed in high-contrast scenography that strips away corporate banality and replaces it with international auteur authority.";
+          return;
+        } else if (raw.includes("The final sequence builds atmosphere through material detail instead of spectacle") || raw.includes("Complete Narrative Metamorphosis & Sovereign Authority")) {
+          el.textContent = "Complete Narrative Metamorphosis & Sovereign Authority.";
+          return;
+        } else if (raw.includes("Rather than relying on spectacle, the final sequence builds attention through material detail") || raw.includes("Over 96 intensive hours, every touchpoint of the client")) {
+          el.textContent = "Over 96 intensive hours, every touchpoint of the client’s public-facing persona is reconstructed from the ground up: visual posture, spatial dominance, lifestyle framing, and digital presence. The protocol delivers not merely photographs, but an impregnable personal brand dossier that commands respect from investors, media conglomerates, and premier cultural syndicates worldwide.";
+          return;
+        } else if (raw.includes("Color, pigment and reflective surfaces create a tactile") || raw.includes("Monochromatic surface study. High-density contrast calibration") || raw.includes("Post-Extraction Video Clipping, Global Press")) {
+          el.textContent = "Post-Extraction Video Clipping, Global Press Releases & Digital Dominance.";
+          return;
+        } else if (raw.includes("The fictional beauty campaign uses color as an emotional structure") || raw.includes("Visual extraction is only the first phase of sovereign reconstruction")) {
+          el.textContent = "Visual extraction is only the first phase of sovereign reconstruction; deployment is where authority is solidified. Following the 4-day intensive, our syndication desk engineers a structured release rollout. High-framerate footage captured during the protocol is sliced into high-retention short-form video clips, color-graded to cinema standards, and paired with cryptic, magnetic copy designed to monopolize algorithmic feed real estate.";
+          return;
+        } else if (raw.includes("Visible texture and subtle color shifts keep the campaign grounded") || raw.includes("Syndicated Press Dissemination & Monochromatic")) {
+          el.textContent = "Syndicated Press Dissemination & Monochromatic Restraint.";
+          return;
+        } else if (raw.includes("In post-production, the team preserved the physical character") || raw.includes("Coordinated international press releases across tier-one")) {
+          el.textContent = "Coordinated international press releases across tier-one fashion, tech, and cultural publications anchor the new narrative, guaranteeing verified digital authority across major search indexes and knowledge panels. By combining monochromatic visual restraint with surgical distribution, the protocol establishes permanent reputational dominance without uttering a single sales pitch.";
+          return;
+        }
       }
 
       // Substring introduction replacements (fail-safe for any route)
