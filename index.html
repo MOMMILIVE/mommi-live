@@ -6,8 +6,8 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 	<meta name="generator" content="Framer 8a671e2">
-	<title>Mommi Live — Creative Syndicate · Europe</title>
-    <meta name="description" content="Mommi Live is a European creative syndicate and visual intelligence practice operating across high-fashion art direction, campaign imagery, and digital architecture.">
+	<title>Mommi Live — Norwegian Creative Syndicate</title>
+    <meta name="description" content="Mommi Live is a Norwegian creative syndicate and visual intelligence practice operating across high-fashion art direction, campaign imagery, and digital architecture.">
     <link href="/assets/favicon-light-32x32.png" rel="icon" type="image/png" sizes="32x32" media="(prefers-color-scheme: light)">
     <link href="/assets/favicon-dark-32x32.png" rel="icon" type="image/png" sizes="32x32" media="(prefers-color-scheme: dark)">
     <link href="/assets/favicon-32x32.png" rel="icon" type="image/png" sizes="32x32">
@@ -15,14 +15,14 @@
     <link href="/favicon.ico" rel="shortcut icon">
     <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Mommi Live — Creative Syndicate · Europe">
+    <meta property="og:title" content="Mommi Live — Norwegian Creative Syndicate">
     <meta property="og:image" content="https://mommilive.com/assets/thumbnail.jpg">
     <meta property="og:image:width" content="1024">
     <meta property="og:image:height" content="576">
     <!-- X -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Mommi Live — Creative Syndicate · Europe">
-    <meta name="twitter:description" content="Mommi Live is a European creative syndicate and visual intelligence practice operating across high-fashion art direction, campaign imagery, and digital architecture.">
+    <meta name="twitter:title" content="Mommi Live — Norwegian Creative Syndicate">
+    <meta name="twitter:description" content="Mommi Live is a Norwegian creative syndicate and visual intelligence practice operating across high-fashion art direction, campaign imagery, and digital architecture.">
     <meta name="twitter:image" content="https://mommilive.com/assets/thumbnail.jpg">
 	
 	
@@ -219,14 +219,14 @@ a[href*="dumontdark"],
 (function() {
   function getProperTitle() {
     const path = window.location.pathname.toLowerCase();
-    if (path.includes('/about')) return 'Mommi Live — About · Creative Syndicate';
+    if (path.includes('/about')) return 'Mommi Live — About · Norwegian Creative Syndicate';
     if (path.includes('/photographs') || path.includes('/photos') || path.includes('/categories')) return 'Mommi Live — Selected Works';
     if (path.includes('/journal')) return 'Mommi Live — Journal & Treatises';
     if (path.includes('/archive')) return 'Mommi Live — Archive';
-    return 'Mommi Live — Creative Syndicate · Europe';
+    return 'Mommi Live — Norwegian Creative Syndicate';
   }
 
-  const desiredDesc = "Mommi Live is a European creative syndicate and visual intelligence practice operating across high-fashion art direction, campaign imagery, and digital architecture.";
+  const desiredDesc = "Mommi Live is a Norwegian creative syndicate and visual intelligence practice operating across high-fashion art direction, campaign imagery, and digital architecture.";
 
   function updateMetaAndTitle() {
     const title = getProperTitle();
@@ -321,10 +321,10 @@ a[href*="dumontdark"],
     if (w1 && w1.textContent !== 'Mommi Live') w1.textContent = 'Mommi Live';
 
     const w2 = document.querySelector('.framer-1kbz0oo p, [data-framer-appear-id="1kbz0oo"] p');
-    if (w2 && w2.textContent !== 'Creative Syndicate') w2.textContent = 'Creative Syndicate';
+    if (w2 && w2.textContent !== 'Norwegian Creative Syndicate') w2.textContent = 'Norwegian Creative Syndicate';
 
     const w3 = document.querySelector('.framer-1q7l0ul p, [data-framer-appear-id="1q7l0ul"] p, [data-framer-name="Paris"] p');
-    if (w3 && w3.textContent !== 'Europe') w3.textContent = 'Europe';
+    if (w3 && w3.textContent !== '') w3.textContent = '';
   }
 
   // On clean routes (e.g. /about, /photographs, /journal, /archive), remove data-framer-hydrate-v2
@@ -657,7 +657,7 @@ html.lenis body {
     // About Page: Update Info bio to Sovereign Ghost Auteur manifesto
     document.querySelectorAll('p').forEach(p => {
       if ((p.textContent.includes('creative studio') || p.textContent.includes('creative syndicate')) && (p.textContent.includes('Dumont') || p.textContent.includes('Paris-based') || p.textContent.includes('European') || p.textContent.includes('Mommi Live'))) {
-        p.textContent = 'Mommi Live is an exclusive European creative syndicate and visual intelligence practice operating across high-fashion art direction, sovereign aesthetic strategy, spatial brutalism, and visual capital architecture. We execute private commissions for continental fashion houses, sovereign wealth desks, and cultural institutions under strict non-disclosure. Enforcing monolithic restraint, shadow subtraction, and deliberate spatial choreography, our mandate is not commercial decoration—it is the construction of sovereign visual capital.';
+        p.textContent = 'Mommi Live is an exclusive Norwegian creative syndicate and visual intelligence practice operating across high-fashion art direction, sovereign aesthetic strategy, spatial brutalism, and visual capital architecture. We execute private commissions for continental fashion houses, sovereign wealth desks, and cultural institutions under strict non-disclosure. Enforcing monolithic restraint, shadow subtraction, and deliberate spatial choreography, our mandate is not commercial decoration—it is the construction of sovereign visual capital.';
       }
     });
 
@@ -1451,9 +1451,9 @@ html.lenis body {
     const w1 = document.querySelector('.framer-85znge p, [data-framer-appear-id="85znge"] p');
     if (w1 && w1.textContent !== 'Mommi Live') w1.textContent = 'Mommi Live';
     const w2 = document.querySelector('.framer-1kbz0oo p, [data-framer-appear-id="1kbz0oo"] p');
-    if (w2 && w2.textContent !== 'Creative Syndicate') w2.textContent = 'Creative Syndicate';
+    if (w2 && w2.textContent !== 'Norwegian Creative Syndicate') w2.textContent = 'Norwegian Creative Syndicate';
     const w3 = document.querySelector('.framer-1q7l0ul p, [data-framer-appear-id="1q7l0ul"] p, [data-framer-name="Paris"] p');
-    if (w3 && w3.textContent !== 'Europe') w3.textContent = 'Europe';
+    if (w3 && w3.textContent !== '') w3.textContent = '';
   }
 
   let isCustomizing = false;
